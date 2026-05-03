@@ -26,14 +26,18 @@ function LinearAlgebra.eigvals!(
     end
 end
 
-# This is probably the best we can do unless LinearAlgebra coöperates
 """
-    eigvecs(S::Schur{Complex{<:AbstractFloat}}; left=false) -> Matrix
+    eigvecs(S::Schur; left=false) -> Matrix
+    eigvecs(S::GeneralizedSchur; left=false) -> Matrix
 
 Compute right or left eigenvectors from a Schur decomposition.
 Eigenvectors are returned as columns of a matrix, ordered to match `S.values`.
-The returned eigenvectors have unit Euclidean norm, and the largest
+
+For standard Schur, the returned eigenvectors have unit Euclidean norm, and the largest
 elements are real.
+
+For generalized Schur, each vector is scaled so the largest element `vⱼ`
+satisfies `abs(real(vⱼ)) + abs(imag(vⱼ)) = 1` (a convention from LAPACK).
 """
 function LinearAlgebra.eigvecs(
         S::Schur{Complex{T}}; left::Bool = false
