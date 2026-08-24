@@ -163,28 +163,29 @@ function LinearAlgebra.eigen!(
     end
 end
 
+# 
 function LinearAlgebra.eigen!(
         A::RealHermSymComplexHerm{<:STypes, <:StridedMatrix};
         alg::Algorithm = QRIteration(),
-        kwargs...
+        sortby::Union{Function, Nothing} = nothing
     )
-    return geigen!(A, alg; kwargs...)
+    return geigen!(A, alg; sortby = (sortby === nothing ? identity : sortby))
 end
 
 function LinearAlgebra.eigvals!(
         A::RealHermSymComplexHerm{<:STypes, <:StridedMatrix};
         alg::Algorithm = QRIteration(),
-        kwargs...
+        sortby::Union{Function, Nothing} = nothing
     )
-    return geigvals!(A, alg; kwargs...)
+    return geigvals!(A, alg; sortby = (sortby === nothing ? identity : sortby))
 end
 
 function LinearAlgebra.eigen!(
         A::SymTridiagonal{<:AbstractFloat};
         alg::Algorithm = QRIteration(),
-        kwargs...
+        sortby::Union{Function, Nothing} = nothing
     )
-    return geigen!(A, alg; kwargs...)
+    return geigen!(A, alg; sortby = (sortby === nothing ? identity : sortby))
 end
 
 function LinearAlgebra.eigvals!(

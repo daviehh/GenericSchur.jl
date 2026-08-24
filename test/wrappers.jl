@@ -104,6 +104,12 @@ if piracy
                 for j in 1:n
                     @test vr[:, j] ≈ v[:, n + 1 - j]
                 end
+                if w in (:hermitian, :symmetric)
+                    Er = eigen(Awrk)
+                    λr = eigvals(Awrk)
+                    @test issorted(Er.values)
+                    @test issorted(λr)
+                end
             end
         end
     end
@@ -125,6 +131,12 @@ if piracy
                     @warn "eigval order comparison (eigvals, eigen, diff): "
                     display(hcat(λ, E.values, λ .- E.values))
                     println()
+                end
+                if w == :hermitian
+                    Er = eigen(Awrk)
+                    λr = eigvals(Awrk)
+                    @test issorted(Er.values)
+                    @test issorted(λr)
                 end
             end
         end
