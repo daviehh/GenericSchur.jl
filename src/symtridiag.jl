@@ -45,7 +45,7 @@ function geigen!(A::SymTridiagonal{T}, alg = QRIteration(); sortby=eigsortby) wh
     V = Matrix{T}(I, n, n)
     _gschur!(A, alg, V)
     λ = copy(A.dv)
-    return LinearAlgebra.Eigen(sorteig!(λ, V, sortby)...)
+    return LinearAlgebra.Eigen(sorteig!(λ, V, isnothing(sortby) ? identity : sortby)...)
 end
 
 function geigvals!(A::SymTridiagonal{T}, alg = QRIteration()) where {T <: AbstractFloat}
