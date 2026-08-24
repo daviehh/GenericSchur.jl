@@ -40,12 +40,12 @@ function gschur!(
     return Schur(Tschur, Z, v)
 end
 
-function geigen!(A::SymTridiagonal{T}, alg = QRIteration()) where {T <: AbstractFloat}
+function geigen!(A::SymTridiagonal{T}, alg = QRIteration(); sortby=eigsortby) where {T <: AbstractFloat}
     n = length(A.dv)
     V = Matrix{T}(I, n, n)
     _gschur!(A, alg, V)
     λ = copy(A.dv)
-    return LinearAlgebra.Eigen(sorteig!(λ, V, eigsortby)...)
+    return LinearAlgebra.Eigen(sorteig!(λ, V, sortby)...)
 end
 
 function geigvals!(A::SymTridiagonal{T}, alg = QRIteration()) where {T <: AbstractFloat}
